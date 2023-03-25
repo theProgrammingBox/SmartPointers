@@ -3,31 +3,43 @@
 
 int main()
 {
-	std::unique_ptr<int> p1(new int(5));
-	std::unique_ptr<int> p2 = std::move(p1);
-	std::cout << *p2 << std::endl;
-	//std::cout << *p1 << std::endl; // Error: p1 is empty
+	std::unique_ptr<uint32_t> zero = std::make_unique<uint32_t>(0);
+	std::unique_ptr<uint32_t> one = std::make_unique<uint32_t>(1);
+	std::unique_ptr<uint32_t> two = std::make_unique<uint32_t>(2);
 	
-	std::unique_ptr<int>* p3 = &p2;
-	std::cout << **p3 << std::endl;
-
-	int* p4 = p2.get();
-	std::cout << *p4 << std::endl;
-	*p4 = 4;
-	std::cout << *p4 << std::endl;
-	std::cout << *p2 << std::endl;
-	std::cout << **p3 << std::endl;
+	std::cout << zero << std::endl;
+	std::cout << *zero << std::endl;
+	std::cout << one << std::endl;
+	std::cout << *one << std::endl;
 	std::cout << std::endl;
 
-	int* p5;
-	if (true)
-	{
-		std::unique_ptr<int> p6(new int(6));
-		p5 = p6.get();
-		std::cout << *p5 << std::endl;
-		std::cout << *p6 << std::endl;
-	}
-	std::cout << *p5 << std::endl;
+	*one = *zero;	// value replaced, not address
+
+	std::cout << zero << std::endl;
+	std::cout << *zero << std::endl;
+	std::cout << one << std::endl;
+	std::cout << *one << std::endl;
+	std::cout << std::endl;
+	std::cout << std::endl;
+
+	*one = 1;
+
+	std::cout << one << std::endl;
+	std::cout << *one << std::endl;
+	std::cout << two << std::endl;
+	std::cout << *two << std::endl;
+	std::cout << std::endl;
+
+	one = std::move(two);	// address replaced, not value. two is now empty
+	
+	std::cout << one << std::endl;
+	std::cout << *one << std::endl;
+	std::cout << two << std::endl;
+	//std::cout << *two << std::endl;	// address set to nothing
+	std::cout << std::endl;
+	std::cout << std::endl;
+	
+	two = std::make_unique<uint32_t>(2);
 	
 	return 0;
 }
